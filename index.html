@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#11231b" />
+  <title>Manvi Rathore — Social Media Manager & Content Creator</title>
+  <meta name="description" content="Manvi Rathore — Social Media Manager, Editor & Wedding Content Creator. Aesthetic visuals, creative storytelling, and trend-focused content for cafés, resorts, events & creators." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Manvi Rathore — Social Media Manager & Content Creator" />
+  <meta property="og:description" content="Aesthetic visuals. Creative storytelling. Engaging digital content." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/manvi-portrait.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <span class="loader__mark">MR</span>
+      <span class="loader__bar"><i></i></span>
+      <span class="loader__text">Loading the aesthetic…</span>
+    </div>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- 3D background canvas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="grain"></div>
+
+  <!-- Progress bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Navbar -->
+  <header class="nav" id="nav">
+    <a href="#home" class="nav__logo" data-cursor>
+      <span>Manvi</span> Rathore
+    </a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#about" data-cursor>About</a>
+      <a href="#services" data-cursor>Services</a>
+      <a href="#work" data-cursor>Work</a>
+      <a href="#showcase" data-cursor>Showcase</a>
+      <a href="#contact" class="nav__cta" data-cursor>Let's Talk</a>
+    </nav>
+    <button type="button" class="nav__toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero__glow"></div>
+      <div class="hero__content">
+        <div class="hero__text">
+          <p class="hero__eyebrow reveal">✦ Social Media Manager · Editor · Wedding Content Creator</p>
+          <h1 class="hero__title">
+            <span class="line"><span>Aesthetic</span></span>
+            <span class="line"><span>visuals,</span></span>
+            <span class="line italic"><span>creative</span></span>
+            <span class="line"><span>storytelling.</span></span>
+          </h1>
+          <p class="hero__lead reveal">
+            I help cafés, resorts, schools, events & creators build their online
+            presence through creative shoots, reel editing and content strategy.
+          </p>
+          <div class="hero__actions reveal">
+            <a href="#showcase" class="btn btn--primary" data-cursor>View My Work</a>
+            <a href="#contact" class="btn btn--ghost" data-cursor>Work With Me</a>
+          </div>
+          <div class="hero__stats reveal">
+            <div class="stat"><b data-count="12">0</b><span>Services<br>Offered</span></div>
+            <div class="stat"><b data-count="6">0</b><span>Brands &<br>Resorts</span></div>
+            <div class="stat"><b data-count="100" data-suffix="%">0</b><span>Aesthetic<br>Obsessed</span></div>
+          </div>
+        </div>
+
+        <div class="hero__visual reveal">
+          <div class="portrait" id="tiltPortrait">
+            <div class="portrait__frame">
+              <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore" />
+              <div class="portrait__shine"></div>
+            </div>
+            <div class="portrait__badge portrait__badge--top">📸 Content Creator</div>
+            <div class="portrait__badge portrait__badge--bottom">🎬 Reel Editor</div>
+            <div class="portrait__ring"></div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll" data-cursor>
+        <span>Scroll</span>
+        <i></i>
+      </a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Reel Editing ✦ Wedding Content ✦ Brand Shoots ✦ Event Coverage ✦ Content Strategy ✦ Instagram Management ✦ Product Reels ✦ PR Shoots ✦</span>
+        <span>Reel Editing ✦ Wedding Content ✦ Brand Shoots ✦ Event Coverage ✦ Content Strategy ✦ Instagram Management ✦ Product Reels ✦ PR Shoots ✦</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="about section" id="about">
+      <div class="section__head">
+        <span class="kicker reveal">01 — About Me</span>
+        <h2 class="reveal">Creative content creator turning<br><i>moments into momentum.</i></h2>
+      </div>
+      <div class="about__grid">
+        <div class="about__media reveal">
+          <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore at work" loading="lazy" />
+          <div class="about__tag">Jaipur, India</div>
+        </div>
+        <div class="about__body">
+          <p class="reveal">
+            I'm a <strong>Social Media Manager, Editor & Wedding Content Creator</strong>
+            passionate about creating aesthetic visuals and engaging digital content. My
+            experience spans social media management, reel editing, wedding content
+            creation, BTS shoots and commercial videos.
+          </p>
+          <p class="reveal">
+            I love helping brands and creators grow through visually engaging,
+            trend-focused content — from the first shoot idea to the final cut that stops
+            the scroll.
+          </p>
+          <div class="about__pillars">
+            <div class="pillar reveal"><b>Aesthetic</b><span>Visual-first edits with a signature, cohesive feel.</span></div>
+            <div class="pillar reveal"><b>Strategic</b><span>Trend-focused content planned to actually engage.</span></div>
+            <div class="pillar reveal"><b>Story-led</b><span>Every reel built around a moment worth sharing.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services section" id="services">
+      <div class="section__head">
+        <span class="kicker reveal">02 — What I Do</span>
+        <h2 class="reveal">Services crafted to make<br><i>brands unforgettable.</i></h2>
+      </div>
+      <div class="services__grid" id="servicesGrid">
+        <!-- cards injected via JS -->
+      </div>
+    </section>
+
+    <!-- SKILLS + NICHE -->
+    <section class="duo section">
+      <div class="duo__col">
+        <span class="kicker reveal">03 — Toolkit</span>
+        <h3 class="reveal">Skills</h3>
+        <ul class="bars" id="skillsBars"></ul>
+      </div>
+      <div class="duo__col">
+        <span class="kicker reveal">04 — Content Niche</span>
+        <h3 class="reveal">Where I Create</h3>
+        <div class="chips" id="nicheChips"></div>
+      </div>
+    </section>
+
+    <!-- WORK / COLLABS -->
+    <section class="work section" id="work">
+      <div class="section__head">
+        <span class="kicker reveal">05 — Experience</span>
+        <h2 class="reveal">Trusted by resorts, schools<br>& <i>creators alike.</i></h2>
+        <p class="section__sub reveal">Worked with schools, cafés, resorts and creators to craft engaging digital content and grow online presence.</p>
+      </div>
+      <div class="work__logos" id="workLogos"></div>
+
+      <div class="achievements">
+        <h4 class="reveal">Special Achievements</h4>
+        <div class="achievements__grid" id="achievementsGrid"></div>
+      </div>
+    </section>
+
+    <!-- SHOWCASE -->
+    <section class="showcase section" id="showcase">
+      <div class="section__head">
+        <span class="kicker reveal">06 — Portfolio</span>
+        <h2 class="reveal">A glimpse of the<br><i>aesthetic in motion.</i></h2>
+        <p class="section__sub reveal">Reels, client projects, before/after edits, wedding & event content and BTS moments.</p>
+      </div>
+      <div class="showcase__grid" id="showcaseGrid"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact section" id="contact">
+      <div class="contact__inner">
+        <span class="kicker reveal">07 — Let's Create</span>
+        <h2 class="reveal">Got a brand, event or wedding<br>that needs <i>the magic touch?</i></h2>
+        <p class="reveal">Let's turn your moments into content people stop and stare at.</p>
+        <div class="contact__actions reveal">
+          <a href="mailto:manvidiaries22@gmail.com" class="btn btn--primary" data-cursor>manvidiaries22@gmail.com</a>
+          <a href="https://instagram.com/manvi_diaries_" target="_blank" rel="noopener" class="btn btn--ghost" data-cursor>@manvi_diaries_</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <span class="footer__logo">Manvi Rathore</span>
+      <nav>
+        <a href="#about" data-cursor>About</a>
+        <a href="#services" data-cursor>Services</a>
+        <a href="#showcase" data-cursor>Showcase</a>
+        <a href="#contact" data-cursor>Contact</a>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year"></span> Manvi Rathore · Aesthetic visuals, creative storytelling.</span>
+      <span>Crafted with care.</span>
+    </div>
+  </footer>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
