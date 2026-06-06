@@ -28,7 +28,7 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{
   font-family:var(--sans);
   background:var(--bg);
@@ -333,15 +333,21 @@ main, .nav, .footer{position:relative;z-index:2}
   .portrait__badge--top{top:12%;left:-4%}
   .portrait__badge--bottom{bottom:10%;right:-4%}
   .hero__scroll{display:none}
-  .showcase__grid{grid-template-columns:1fr 1fr}
-  .shot--a,.shot--b{grid-column:span 2;min-height:260px}
-  .shot{min-height:170px}
+  /* clean magazine grid: feature tiles full-width, rest 2-up */
+  .showcase__grid{grid-template-columns:1fr 1fr;gap:14px}
+  .shot{min-height:160px}
+  .shot--a,.shot--b{grid-column:span 2;min-height:240px}
+  .shot--c,.shot--d,.shot--e,.shot--placeholder{grid-column:span 1;min-height:150px}
+  .shot__label b{font-size:1.2rem}
   .footer__top{flex-direction:column;align-items:flex-start}
   .marquee{transform:rotate(-1.5deg) scale(1.06)}
 }
 @media (max-width:420px){
+  /* single, bold column on the smallest phones */
   .showcase__grid{grid-template-columns:1fr}
-  .shot--a,.shot--b{grid-column:span 1}
+  .shot--a,.shot--b,.shot--c,.shot--d,.shot--e,.shot--placeholder{grid-column:span 1}
+  .shot{min-height:200px}
+  .shot--a,.shot--b{min-height:240px}
   .hero__stats{gap:16px}
   .stat b{font-size:1.7rem}
 }
