@@ -1,0 +1,12 @@
+{
+  "name": "Manvi Rathore — Portfolio",
+  "short_name": "Manvi Rathore",
+  "description": "Social Media Manager, Editor & Wedding Content Creator. Aesthetic visuals, creative storytelling.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f2ea",
+  "theme_color": "#11231b",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const shg = document.getElementById('showcaseGrid');
   showcase.forEach(s => {
     const c = el('article', `shot ${s.cls} reveal`,
-      (s.img ? `<img src="${s.img}" alt="${s.label}" loading="lazy" />` : `<div class="shot__icon">${s.icon}</div>`) +
+      (s.img ? `<img src="${s.img}" alt="${s.label}" loading="lazy" decoding="async" width="800" height="600" />` : `<div class="shot__icon">${s.icon}</div>`) +
       `<div class="shot__label"><b>${s.label}</b><span>${s.sub}</span></div>`);
     c.setAttribute('data-cursor', '');
     shg.appendChild(c);
@@ -129,18 +129,24 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Loader ---------- */
   const loader = document.getElementById('loader');
   const bar = loader.querySelector('.loader__bar i');
+  let heroStarted = false;
+  const finishLoad = () => {
+    if (heroStarted) return;
+    heroStarted = true;
+    loader.classList.add('hide');
+    startHero();
+  };
   let prog = 0;
   const tick = setInterval(() => {
     prog = Math.min(100, prog + Math.random() * 18);
     bar.style.width = prog + '%';
     if (prog >= 100) {
       clearInterval(tick);
-      setTimeout(() => {
-        loader.classList.add('hide');
-        startHero();
-      }, 350);
+      setTimeout(finishLoad, 350);
     }
   }, 130);
+  // Safety net: never let the loader hang (e.g. slow timers)
+  setTimeout(() => { clearInterval(tick); bar.style.width = '100%'; finishLoad(); }, 4000);
 
   /* ---------- Navbar ---------- */
   const nav = document.getElementById('nav');
@@ -155,13 +161,21 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.classList.remove('open');
     navToggle.classList.remove('active');
     document.body.classList.remove('nav-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open menu');
   };
   navToggle.addEventListener('click', () => {
     const open = navLinks.classList.toggle('open');
     navToggle.classList.toggle('active', open);
     document.body.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
   });
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  // Close menu on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) closeMenu();
+  });
 
   /* ---------- Scroll progress ---------- */
   const sp = document.getElementById('scrollProgress');

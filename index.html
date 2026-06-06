@@ -6,12 +6,42 @@
   <meta name="theme-color" content="#11231b" />
   <title>Manvi Rathore — Social Media Manager & Content Creator</title>
   <meta name="description" content="Manvi Rathore — Social Media Manager, Editor & Wedding Content Creator. Aesthetic visuals, creative storytelling, and trend-focused content for cafés, resorts, events & creators." />
+  <meta name="author" content="Manvi Rathore" />
+  <meta name="keywords" content="Manvi Rathore, social media manager, reel editor, wedding content creator, Jaipur, content strategy, brand shoots, Instagram management" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://manviportfolio.vercel.app/" />
+
+  <!-- Icons -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="manifest" href="site.webmanifest" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Manvi Rathore — Social Media Manager & Content Creator" />
   <meta property="og:description" content="Aesthetic visuals. Creative storytelling. Engaging digital content." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/manvi-portrait.jpg" />
+  <meta property="og:image:alt" content="Manvi Rathore" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Manvi Rathore — Social Media Manager & Content Creator" />
+  <meta name="twitter:description" content="Aesthetic visuals. Creative storytelling. Engaging digital content." />
+  <meta name="twitter:image" content="assets/manvi-portrait.jpg" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Manvi Rathore",
+    "jobTitle": "Social Media Manager, Editor & Wedding Content Creator",
+    "description": "Creative content creator specializing in social media management, reel editing, wedding content and brand shoots.",
+    "email": "mailto:manvidiaries22@gmail.com",
+    "image": "assets/manvi-portrait.jpg",
+    "address": { "@type": "PostalAddress", "addressLocality": "Jaipur", "addressCountry": "IN" },
+    "sameAs": ["https://instagram.com/manvi_diaries_"],
+    "knowsAbout": ["Social Media Management", "Reel Editing", "Wedding Content Creation", "Content Strategy", "Brand Shoots"]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +50,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a href="#home" class="skip-link">Skip to content</a>
+
   <!-- Loader -->
   <div class="loader" id="loader">
     <div class="loader__inner">
@@ -45,14 +77,14 @@
     <a href="#home" class="nav__logo" data-cursor>
       <span>Manvi</span> Rathore
     </a>
-    <nav class="nav__links" id="navLinks">
+    <nav class="nav__links" id="navLinks" aria-label="Primary">
       <a href="#about" data-cursor>About</a>
       <a href="#services" data-cursor>Services</a>
       <a href="#work" data-cursor>Work</a>
       <a href="#showcase" data-cursor>Showcase</a>
       <a href="#contact" class="nav__cta" data-cursor>Let's Talk</a>
     </nav>
-    <button type="button" class="nav__toggle" id="navToggle" aria-label="Menu">
+    <button type="button" class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -88,7 +120,7 @@
         <div class="hero__visual reveal">
           <div class="portrait" id="tiltPortrait">
             <div class="portrait__frame">
-              <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore" />
+              <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore" width="1080" height="1440" fetchpriority="high" decoding="async" />
               <div class="portrait__shine"></div>
             </div>
             <div class="portrait__badge portrait__badge--top">📸 Content Creator</div>
@@ -120,7 +152,7 @@
       </div>
       <div class="about__grid">
         <div class="about__media reveal">
-          <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore at work" loading="lazy" />
+          <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore at work" width="1080" height="1350" loading="lazy" decoding="async" />
           <div class="about__tag">Jaipur, India</div>
         </div>
         <div class="about__body">
