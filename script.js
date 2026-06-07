@@ -53,11 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const showcase = [
-    { cls: 'shot--a', img: 'assets/manvi-portrait.jpg', label: 'Lifestyle & Fashion', sub: 'Creative shoot' },
-    { cls: 'shot--b', img: 'assets/work-editing.png', label: 'Reel Editing', sub: 'CapCut · 2K/4K export' },
-    { cls: 'shot--c', icon: '💍', label: 'Wedding', sub: 'Content creation' },
-    { cls: 'shot--d', icon: '🎵', label: 'Music Video', sub: 'BTS coverage' },
-    { cls: 'shot--e', icon: '☕', label: 'Cafés & Resorts', sub: 'Brand shoots' },
+    { cls: 'shot--a', video: 'assets/reel-1.mp4', poster: 'assets/reel-1-poster.jpg', label: 'Brand Reel', sub: 'Shoot · edit · export' },
+    { cls: 'shot--b', video: 'assets/reel-2.mp4', poster: 'assets/reel-2-poster.jpg', label: 'Content Edit', sub: 'Promotional video' },
+    { cls: 'shot--c', img: 'assets/manvi-portrait.jpg', label: 'Lifestyle & Fashion', sub: 'Creative shoot' },
+    { cls: 'shot--d', img: 'assets/work-editing.png', label: 'Reel Editing', sub: 'CapCut · 2K/4K export' },
+    { cls: 'shot--e', icon: '💍', label: 'Wedding', sub: 'Content creation' },
+    { cls: 'shot--f', icon: '🎵', label: 'Music Video', sub: 'BTS coverage' },
+    { cls: 'shot--g', icon: '☕', label: 'Cafés & Resorts', sub: 'Brand shoots' },
   ];
 
   const el = (tag, cls, html) => {
@@ -113,12 +115,43 @@ document.addEventListener('DOMContentLoaded', () => {
   // Showcase
   const shg = document.getElementById('showcaseGrid');
   showcase.forEach(s => {
-    const c = el('article', `shot ${s.cls} reveal`,
-      (s.img ? `<img src="${s.img}" alt="${s.label}" loading="lazy" decoding="async" width="800" height="600" />` : `<div class="shot__icon">${s.icon}</div>`) +
-      `<div class="shot__label"><b>${s.label}</b><span>${s.sub}</span></div>`);
+    let media;
+    if (s.video) {
+      media = `<video class="shot__video" src="${s.video}" poster="${s.poster}" muted loop playsinline preload="none" aria-label="${s.label}"></video>
+               <span class="shot__badge-reel">▶ Reel</span>
+               <span class="shot__play" aria-hidden="true">🔊</span>`;
+    } else if (s.img) {
+      media = `<img src="${s.img}" alt="${s.label}" loading="lazy" decoding="async" width="800" height="600" />`;
+    } else {
+      media = `<div class="shot__icon">${s.icon}</div>`;
+    }
+    const c = el('article', `shot ${s.cls}${s.video ? ' shot--video' : ''} reveal`,
+      media + `<div class="shot__label"><b>${s.label}</b><span>${s.sub}</span></div>`);
     c.setAttribute('data-cursor', '');
     shg.appendChild(c);
   });
+
+  // Autoplay videos only while visible (saves data + battery); tap to toggle on touch
+  const vids = [...shg.querySelectorAll('.shot__video')];
+  if (vids.length) {
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          const v = en.target;
+          if (en.isIntersecting) { v.play().catch(() => {}); }
+          else { v.pause(); }
+        });
+      }, { threshold: 0.5 });
+      vids.forEach(v => io.observe(v));
+    }
+    // Tap/click a video tile to play with sound
+    vids.forEach(v => {
+      v.closest('.shot').addEventListener('click', () => {
+        if (v.muted) { v.muted = false; v.closest('.shot').classList.add('shot--playing'); v.play().catch(() => {}); }
+        else { v.muted = true; v.closest('.shot').classList.remove('shot--playing'); }
+      });
+    });
+  }
   // Placeholder tile inviting new work
   const ph = el('article', 'shot shot--placeholder reveal', `<div class="shot__icon">＋</div><div class="shot__label"><b>Your project</b><span>Let's create together</span></div>`);
   ph.setAttribute('data-cursor', '');
