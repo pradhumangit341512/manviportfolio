@@ -53,10 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const showcase = [
-    { cls: 'shot--a', video: 'assets/reel-1.mp4', poster: 'assets/reel-1-poster.jpg', label: 'Brand Reel', sub: 'Shoot · edit · export' },
-    { cls: 'shot--b', video: 'assets/reel-2.mp4', poster: 'assets/reel-2-poster.jpg', label: 'Content Edit', sub: 'Promotional video' },
-    { cls: 'shot--c', img: 'assets/manvi-portrait.jpg', label: 'Lifestyle & Fashion', sub: 'Creative shoot' },
-    { cls: 'shot--d', img: 'assets/work-editing.png', label: 'Reel Editing', sub: 'CapCut · 2K/4K export' },
+    { cls: 'shot--a', video: 'assets/reel-1.mp4', poster: 'assets/reel-1-poster.webp', label: 'Brand Reel', sub: 'Shoot · edit · export' },
+    { cls: 'shot--b', video: 'assets/reel-2.mp4', poster: 'assets/reel-2-poster.webp', label: 'Content Edit', sub: 'Promotional video' },
+    { cls: 'shot--c', base: 'assets/manvi-portrait', jpg: 'assets/manvi-portrait.jpg', label: 'Lifestyle & Fashion', sub: 'Creative shoot' },
+    { cls: 'shot--d', base: 'assets/work-editing', jpg: 'assets/work-editing.png', label: 'Reel Editing', sub: 'CapCut · 2K/4K export' },
     { cls: 'shot--e', icon: '💍', label: 'Wedding', sub: 'Content creation' },
     { cls: 'shot--f', icon: '🎵', label: 'Music Video', sub: 'BTS coverage' },
     { cls: 'shot--g', icon: '☕', label: 'Cafés & Resorts', sub: 'Brand shoots' },
@@ -112,46 +112,59 @@ document.addEventListener('DOMContentLoaded', () => {
     ag.appendChild(el('div', 'ach reveal', `<i>${a.i}</i><p>${a.t}</p>`));
   });
 
-  // Showcase
+  // Showcase — gallery of openable media (images + videos) feeds the lightbox
   const shg = document.getElementById('showcaseGrid');
+  const gallery = [];
   showcase.forEach(s => {
-    let media;
+    let media, openable = true, galleryIndex = -1;
     if (s.video) {
       media = `<video class="shot__video" src="${s.video}" poster="${s.poster}" muted loop playsinline preload="none" aria-label="${s.label}"></video>
                <span class="shot__badge-reel">▶ Reel</span>
-               <span class="shot__play" aria-hidden="true">🔊</span>`;
-    } else if (s.img) {
-      media = `<img src="${s.img}" alt="${s.label}" loading="lazy" decoding="async" width="800" height="600" />`;
+               <span class="shot__play" aria-hidden="true">⤢</span>`;
+      galleryIndex = gallery.push({ type: 'video', src: s.video, poster: s.poster, caption: `${s.label} — ${s.sub}` }) - 1;
+    } else if (s.base) {
+      media = `<picture>
+                 <source type="image/webp" srcset="${s.base}-sm.webp" />
+                 <img src="${s.jpg}" alt="${s.label}" loading="lazy" decoding="async" width="800" height="600" />
+               </picture>
+               <span class="shot__play" aria-hidden="true">⤢</span>`;
+      galleryIndex = gallery.push({ type: 'image', src: `${s.base}.webp`, fallback: s.jpg, caption: `${s.label} — ${s.sub}` }) - 1;
     } else {
       media = `<div class="shot__icon">${s.icon}</div>`;
+      openable = false;
     }
-    const c = el('article', `shot ${s.cls}${s.video ? ' shot--video' : ''} reveal`,
+    const c = el('article', `shot ${s.cls}${s.video ? ' shot--video' : ''}${openable ? ' shot--openable' : ''} reveal`,
       media + `<div class="shot__label"><b>${s.label}</b><span>${s.sub}</span></div>`);
     c.setAttribute('data-cursor', '');
+    if (openable) {
+      c.setAttribute('role', 'button');
+      c.setAttribute('tabindex', '0');
+      c.setAttribute('aria-label', `Open ${s.label}`);
+      c.dataset.gallery = galleryIndex;
+    }
     shg.appendChild(c);
   });
 
-  // Autoplay videos only while visible (saves data + battery); tap to toggle on touch
+  // Autoplay tile videos only while visible (saves data + battery)
   const vids = [...shg.querySelectorAll('.shot__video')];
-  if (vids.length) {
-    if ('IntersectionObserver' in window && !reduceMotion) {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(en => {
-          const v = en.target;
-          if (en.isIntersecting) { v.play().catch(() => {}); }
-          else { v.pause(); }
-        });
-      }, { threshold: 0.5 });
-      vids.forEach(v => io.observe(v));
-    }
-    // Tap/click a video tile to play with sound
-    vids.forEach(v => {
-      v.closest('.shot').addEventListener('click', () => {
-        if (v.muted) { v.muted = false; v.closest('.shot').classList.add('shot--playing'); v.play().catch(() => {}); }
-        else { v.muted = true; v.closest('.shot').classList.remove('shot--playing'); }
-      });
-    });
+  if (vids.length && 'IntersectionObserver' in window && !reduceMotion) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => en.isIntersecting ? en.target.play().catch(() => {}) : en.target.pause());
+    }, { threshold: 0.4 });
+    vids.forEach(v => io.observe(v));
   }
+
+  /* ---------- Lightbox gallery ---------- */
+  // Also let the About portrait open in the lightbox
+  const aboutMedia = document.querySelector('.about__media[data-lightbox]');
+  if (aboutMedia) {
+    const gi = gallery.push({ type: 'image', src: aboutMedia.dataset.lightbox, fallback: 'assets/manvi-2.jpg', caption: aboutMedia.dataset.caption }) - 1;
+    aboutMedia.dataset.gallery = gi;
+    aboutMedia.setAttribute('role', 'button');
+    aboutMedia.setAttribute('tabindex', '0');
+    aboutMedia.setAttribute('aria-label', 'Open photo');
+  }
+  setupLightbox(gallery);
   // Placeholder tile inviting new work
   const ph = el('article', 'shot shot--placeholder reveal', `<div class="shot__icon">＋</div><div class="shot__label"><b>Your project</b><span>Let's create together</span></div>`);
   ph.setAttribute('data-cursor', '');
@@ -320,6 +333,94 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Three.js 3D background ---------- */
   initThree(reduceMotion);
 });
+
+/* =========================================================
+   Lightbox gallery — accessible, keyboard + swipe, captions
+   ========================================================= */
+function setupLightbox(items) {
+  const lb = document.getElementById('lightbox');
+  if (!lb || !items.length) return;
+  const media = document.getElementById('lbMedia');
+  const caption = document.getElementById('lbCaption');
+  const counter = document.getElementById('lbCounter');
+  const btnClose = document.getElementById('lbClose');
+  const btnPrev = document.getElementById('lbPrev');
+  const btnNext = document.getElementById('lbNext');
+
+  let index = 0;
+  let lastFocus = null;
+
+  const render = () => {
+    const it = items[index];
+    media.innerHTML = '';
+    if (it.type === 'video') {
+      const v = document.createElement('video');
+      v.src = it.src; v.poster = it.poster || '';
+      v.controls = true; v.autoplay = true; v.loop = true; v.playsInline = true; v.muted = true;
+      v.className = 'lightbox__video';
+      media.appendChild(v);
+      v.play().catch(() => {});
+    } else {
+      const pic = document.createElement('picture');
+      const src = document.createElement('source');
+      src.type = 'image/webp'; src.srcset = it.src;
+      const img = document.createElement('img');
+      img.src = it.fallback || it.src; img.alt = it.caption || '';
+      img.className = 'lightbox__img';
+      pic.appendChild(src); pic.appendChild(img);
+      media.appendChild(pic);
+    }
+    caption.textContent = it.caption || '';
+    counter.textContent = `${index + 1} / ${items.length}`;
+    const multi = items.length > 1;
+    btnPrev.style.display = btnNext.style.display = multi ? '' : 'none';
+  };
+
+  const open = i => {
+    index = (i + items.length) % items.length;
+    lastFocus = document.activeElement;
+    render();
+    lb.hidden = false;
+    requestAnimationFrame(() => lb.classList.add('is-open'));
+    document.body.classList.add('nav-open');
+    btnClose.focus();
+  };
+  const close = () => {
+    lb.classList.remove('is-open');
+    document.body.classList.remove('nav-open');
+    const v = media.querySelector('video'); if (v) v.pause();
+    setTimeout(() => { lb.hidden = true; media.innerHTML = ''; }, 300);
+    if (lastFocus) lastFocus.focus();
+  };
+  const go = dir => { index = (index + dir + items.length) % items.length; render(); };
+
+  // Open triggers
+  document.querySelectorAll('[data-gallery]').forEach(node => {
+    const i = +node.dataset.gallery;
+    node.addEventListener('click', () => open(i));
+    node.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+    });
+  });
+
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', () => go(-1));
+  btnNext.addEventListener('click', () => go(1));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target === document.getElementById('lbFigure')) close(); });
+  document.addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'ArrowRight') go(1);
+  });
+  // Touch swipe
+  let sx = 0;
+  lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+  }, { passive: true });
+}
 
 function initThree(reduceMotion) {
   const canvas = document.getElementById('bg-canvas');

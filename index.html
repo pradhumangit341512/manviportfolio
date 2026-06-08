@@ -120,7 +120,10 @@
         <div class="hero__visual reveal">
           <div class="portrait" id="tiltPortrait">
             <div class="portrait__frame">
-              <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore" width="1080" height="1440" fetchpriority="high" decoding="async" />
+              <picture>
+                <source type="image/webp" srcset="assets/manvi-portrait-sm.webp 675w, assets/manvi-portrait.webp 1200w" sizes="(max-width:980px) 64vw, 380px" />
+                <img src="assets/manvi-portrait.jpg" alt="Manvi Rathore" width="1080" height="1440" fetchpriority="high" decoding="async" />
+              </picture>
               <div class="portrait__shine"></div>
             </div>
             <div class="portrait__badge portrait__badge--top">📸 Content Creator</div>
@@ -151,9 +154,13 @@
         <h2 class="reveal">Creative content creator turning<br><i>moments into momentum.</i></h2>
       </div>
       <div class="about__grid">
-        <div class="about__media reveal">
-          <img src="assets/manvi-2.jpg" alt="Manvi Rathore" width="1280" height="1600" loading="lazy" decoding="async" />
+        <div class="about__media reveal" data-lightbox="assets/manvi-2.webp" data-caption="Manvi Rathore · Content Creator">
+          <picture>
+            <source type="image/webp" srcset="assets/manvi-2-sm.webp 720w, assets/manvi-2.webp 1280w" sizes="(max-width:980px) 92vw, 45vw" />
+            <img src="assets/manvi-2.jpg" alt="Manvi Rathore" width="1280" height="1600" loading="lazy" decoding="async" />
+          </picture>
           <div class="about__tag">Jaipur, India</div>
+          <span class="media-zoom" aria-hidden="true">⤢</span>
         </div>
         <div class="about__body">
           <p class="reveal">
@@ -255,6 +262,18 @@
       <span>Crafted with care.</span>
     </div>
   </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer" hidden>
+    <button type="button" class="lightbox__close" id="lbClose" aria-label="Close">✕</button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" id="lbPrev" aria-label="Previous">‹</button>
+    <button type="button" class="lightbox__nav lightbox__nav--next" id="lbNext" aria-label="Next">›</button>
+    <figure class="lightbox__figure" id="lbFigure">
+      <div class="lightbox__media" id="lbMedia"></div>
+      <figcaption class="lightbox__caption" id="lbCaption"></figcaption>
+    </figure>
+    <span class="lightbox__counter" id="lbCounter"></span>
+  </div>
 
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

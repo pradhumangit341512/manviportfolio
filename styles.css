@@ -40,6 +40,7 @@ body{
 }
 @media (hover:none){ body{cursor:auto} }
 img{display:block;max-width:100%}
+.portrait__frame picture,.about__media picture{display:block;width:100%}
 a{color:inherit;text-decoration:none}
 section{position:relative}
 
@@ -263,6 +264,51 @@ main, .nav, .footer{position:relative;z-index:2}
   background:var(--cream);color:var(--green);border:1.5px dashed rgba(47,92,67,.4)}
 .shot--placeholder::after{display:none}
 .shot--placeholder .shot__icon{font-size:1.6rem}
+/* openable tiles: zoom affordance */
+.shot--openable{cursor:pointer}
+.shot--openable .shot__play{font-size:1rem}
+.shot__play{transition:transform .35s var(--ease),background .35s,opacity .35s}
+.shot--openable:hover .shot__play{transform:scale(1.12);background:var(--gold-soft)}
+.media-zoom{position:absolute;top:14px;right:14px;z-index:2;width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;font-size:1rem;color:var(--forest);background:rgba(246,242,234,.92);
+  opacity:0;transform:scale(.85);transition:opacity .35s var(--ease),transform .35s var(--ease);box-shadow:0 6px 18px -6px rgba(17,35,27,.6)}
+.about__media{cursor:pointer}
+.about__media:hover .media-zoom{opacity:1;transform:scale(1)}
+
+/* ---------- Lightbox ---------- */
+.lightbox{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:24px;
+  background:rgba(11,20,15,.86);backdrop-filter:blur(10px);
+  opacity:0;transition:opacity .3s var(--ease)}
+.lightbox.is-open{opacity:1}
+.lightbox[hidden]{display:none}
+.lightbox__figure{margin:0;max-width:min(1100px,92vw);max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:16px;
+  transform:scale(.96);transition:transform .35s var(--ease)}
+.lightbox.is-open .lightbox__figure{transform:scale(1)}
+.lightbox__media{display:flex;justify-content:center;max-height:78vh}
+.lightbox__img,.lightbox__video{max-width:100%;max-height:78vh;border-radius:14px;object-fit:contain;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
+.lightbox__video{background:#000;width:min(1000px,90vw)}
+.lightbox__caption{color:var(--ivory);font-family:var(--serif);font-style:italic;font-size:1.15rem;text-align:center;opacity:.92}
+.lightbox__counter{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(246,242,234,.7);
+  font-size:.82rem;letter-spacing:.18em}
+.lightbox__close,.lightbox__nav{position:absolute;z-index:2;display:grid;place-items:center;cursor:pointer;
+  background:rgba(246,242,234,.1);color:var(--ivory);border:1px solid rgba(246,242,234,.25);border-radius:50%;
+  transition:background .3s,transform .3s var(--ease)}
+.lightbox__close{top:20px;right:20px;width:48px;height:48px;font-size:1.1rem}
+.lightbox__nav{top:50%;transform:translateY(-50%);width:54px;height:54px;font-size:1.8rem;line-height:1}
+.lightbox__nav--prev{left:20px}
+.lightbox__nav--next{right:20px}
+.lightbox__close:hover{background:var(--gold);color:var(--forest);transform:rotate(90deg)}
+.lightbox__nav:hover{background:var(--gold);color:var(--forest)}
+.lightbox__nav--prev:hover{transform:translateY(-50%) translateX(-3px)}
+.lightbox__nav--next:hover{transform:translateY(-50%) translateX(3px)}
+@media (max-width:620px){
+  .lightbox__close{top:14px;right:14px;width:42px;height:42px}
+  .lightbox__nav{width:44px;height:44px;font-size:1.4rem}
+  .lightbox__nav--prev{left:8px}.lightbox__nav--next{right:8px}
+  .lightbox__caption{font-size:1rem}
+  .media-zoom{opacity:1;transform:scale(1)}
+}
 
 /* ---------- Contact ---------- */
 .contact{text-align:center}
